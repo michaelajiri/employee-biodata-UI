@@ -1,0 +1,357 @@
+<div class="container">
+    <div class="border">
+        <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+            <i class="fa fa-user">New Employee</i>
+        </button>
+    </div>
+    <table class="table table-bordered table-striped table-responsive">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{employee.id}}</td>
+                <td>{{employee.title}}</td>
+                <td>{{employee.firstName}} {{employee.middleName}} {{employee.lastName}}</td>
+                <td>{{employee.username}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.phoneNumber}}</td>
+                <td>{{employee.address}}</td>
+                <td>{{employee.height}}</td>
+                <td>{{employee.weight}}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-warning" (click)="openEdit(contentEdit, employee)">
+                            <i class="fa fa-edit">Edit</i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, employee)">
+                            <i class="fa fa-remove">Delete</i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-add">Add New Employee</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+
+
+            <table width="100%">
+                <tr>
+                    <td width="50%" style="padding-left: 10px">
+
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-4 col-form-label">Title: </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="title" name="title" placeholder="Title"
+                                    class="form-control" ngModel #titleVar="ngModel" [ngClass]="{'is-invalid': (firstNameVar.touched 
+                                    || titleVar.dirty) && !titleVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="titleVar.errors?.required">Title is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="firstName" class="col-sm-4 col-form-label">First Name: </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="firstName" name="firstName" placeholder="First Name"
+                                    class="form-control" ngModel #firstNameVar="ngModel" [ngClass]="{'is-invalid': (firstNameVar.touched 
+                                    || firstNameVar.dirty) && !firstNameVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="firstNameVar.errors?.required">First name is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="middleName" class="col-sm-4 col-form-label">Middle
+                                Name: </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="middleName" name="middleName" placeholder="Middle Name"
+                                    class="form-control" ngModel #middleNameVar="ngModel" [ngClass]="{'is-invalid': (middleNameVar.touched 
+                                || middleNameVar.dirty) && !middleNameVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="middleNameVar.errors?.required">Middle name is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lastName" class="col-sm-4 col-form-label">Last Name: </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="lastName" name="lastName" placeholder="Last Name"
+                                    class="form-control" ngModel #lastNameVar="ngModel" [ngClass]="{'is-invalid': (lastNameVar.touched 
+                                    || lastNameVar.dirty) && !lastNameVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="lastNameVar.errors?.required">Last name is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-4 col-form-label">Username: </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="username" name="username" placeholder="Username"
+                                    class="form-control" ngModel #usernameVar="ngModel" [ngClass]="{'is-invalid': (usernameVar.touched 
+                                    || usernameVar.dirty) && !usernameVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="usernameVar.errors?.required">Username is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-4 col-form-label">Email:
+                            </label>
+                            <div class="col-sm-6">
+                                <input required type="email" id="email" email name="email" placeholder="Email"
+                                    class="form-control" ngModel #emailVar="ngModel" [ngClass]="{'is-invalid': (emailVar.touched 
+                                    || emailVar.dirty) && !emailVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="emailVar.errors?.required">Email is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </td>
+
+                    <td width="50%">
+
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-4 col-form-label">Password:
+                            </label>
+                            <div class="col-sm-6">
+                                <input required type="password" id="password" name="password" placeholder="Password"
+                                    class="form-control" ngModel #passwordVar="ngModel" [ngClass]="{'is-invalid': (passwordVar.touched 
+                                    || passwordVar.dirty) && !passwordVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="passwordVar.errors?.required">Password is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phoneNumber" class="col-sm-4 col-form-label">Phone
+                                No.: </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="phoneNumber" name="phoneNumber" placeholder="Phone No."
+                                    class="form-control" ngModel #phoneNumberVar="ngModel" [ngClass]="{'is-invalid': (phoneNumberVar.touched 
+                                    || phoneNumberVar.dirty) && !phoneNumberVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="phoneNumberVar.errors?.required">Phone Number is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label th:for="address" class="col-sm-4 col-form-label">Address:
+                            </label>
+                            <div class="col-sm-6">
+                                <textarea required type="text" id="address" name="address" placeholder="Address"
+                                    class="form-control" ngModel #addressVar="ngModel" [ngClass]="{'is-invalid': (addressVar.touched 
+                                    || addressVar.dirty) && !addressVar.valid }"></textarea>
+                                <span class="invalid-feedback">
+                                    <span *ngIf="addressVar.errors?.required">Address is required.</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label th:for="height" class="col-sm-4 col-form-label">Height:
+                            </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="height" name="height" placeholder="Height"
+                                    class="form-control" ngModel #heightVar="ngModel" [ngClass]="{'is-invalid': (heightVar.touched 
+                                    || heightVar.dirty) && !heightVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="heightVar.errors?.required">Height is required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label th:for="weight" class="col-sm-4 col-form-label">Weight:
+                            </label>
+                            <div class="col-sm-6">
+                                <input required type="text" id="weight" name="weight" placeholder="Weight"
+                                    class="form-control" ngModel #weightVar="ngModel" [ngClass]="{'is-invalid': (weightVar.touched 
+                                    || weightVar.dirty) && !weightVar.valid }" />
+                                <span class="invalid-feedback">
+                                    <span *ngIf="weightVar.errors?.required">Weight is required.</span>
+                                </span>
+                            </div>
+                        </div>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+
+            <div class="border text-center">
+                <button data-dismiss="modal" class="btn btn-block btn-info" [disabled]="f.invalid"
+                    (click)="modal.close('Save click')">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #contentEdit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-edit">Update Employee Records</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="editForm" novalidate>
+
+            <table width="100%">
+                <tr>
+                    <td width="50%" style="padding-left: 10px">
+
+                        <div class="form-group row">
+                            <label for="id" class="col-sm-4 col-form-label">Id: </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="id" class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-4 col-form-label">Title: </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="title" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="firstName" class="col-sm-4 col-form-label">First Name: </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="firstName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="middleName" class="col-sm-4 col-form-label">Middle Name: </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="middleName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lastName" class="col-sm-4 col-form-label">Last Name: </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="lastName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-4 col-form-label">Username:
+                            </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="username" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-4 col-form-label">Email:
+                            </label>
+                            <div class="col-sm-6">
+                                <input type="email" formControlName="email" class="form-control" />
+                            </div>
+                        </div>
+                    </td>
+
+                    <td width="50%">
+
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-4 col-form-label">Password: </label>
+                            <div class="col-sm-6">
+                                <input type="password" formControlName="password" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phoneNumber" class="col-sm-4 col-form-label">Phone No.:
+                            </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="phoneNumber" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="address" class="col-sm-4 col-form-label">Address:
+                            </label>
+                            <div class="col-sm-6">
+                                <textarea type="text" formControlName="address" class="form-control">
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="height" class="col-sm-4 col-form-label">Height:
+                            </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="height" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="weight" class="col-sm-4 col-form-label">Weight:
+                            </label>
+                            <div class="col-sm-6">
+                                <input type="text" formControlName="weight" class="form-control" />
+                            </div>
+                        </div>
+                        <br /><br /><br />
+                    </td>
+                </tr>
+            </table>
+            <div class="border text-center">
+                <button data-dismiss="modal" class="btn btn-block btn-info" (click)="onSave()">Save Changes</button>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #contentDelete let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h5>Are you sure you want to delete this record?</h5>
+        <div class="border text-center">
+            <button data-dismiss="modal" class="btn btn-block btn-danger" (click)="onDelete()">Yes, Delete!</button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    </div>
+</ng-template>
